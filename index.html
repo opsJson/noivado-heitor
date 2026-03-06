@@ -72,15 +72,15 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.6); display: none;
             justify-content: center; 
-            align-items: flex-start; /* Alterado para empurrar o modal para cima */
-            padding-top: 10vh; /* Espaçamento do topo para não ficar colado */
+            align-items: flex-start;
+            padding-top: 10vh;
             z-index: 1100;
         }
         .modal-content {
             background: #fff; padding: 30px; border-radius: 10px;
             width: 90%; max-width: 450px; text-align: left;
-            max-height: 85vh; /* Evita que o modal vaze da tela */
-            overflow-y: auto; /* Adiciona scroll interno se o modal for muito grande */
+            max-height: 85vh;
+            overflow-y: auto;
         }
         .modal-content h3 { font-family: var(--font-headings); text-align: center; color: var(--color-darkest); margin-bottom: 20px; }
         .modal-content label { font-weight: 600; margin-bottom: 8px; display: block; font-size: 0.9rem;}
@@ -111,7 +111,7 @@
         h2::after { content: ''; display: block; width: 50px; height: 3px; background-color: var(--color-medium); margin: 15px auto 0; }
         p { font-size: 1rem; line-height: 1.7; max-width: 700px; margin: 0 auto 20px; }
 
-        /* HERO - Design mais elegante e clássico */
+        /* HERO */
         #hero { 
             height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; 
             background: linear-gradient(rgba(30, 45, 25, 0.4), rgba(30, 45, 25, 0.7)), url('background.jpeg') no-repeat center center/cover; 
@@ -444,16 +444,28 @@
                 }
             }
 
-            async function addGiftToAPI(presenteId, nome, uuid) {
+            // Função alterada para enviar também o deliveryMethod
+            async function addGiftToAPI(presenteId, nome, uuid, deliveryMethod) {
                 try {
                     const response = await fetch(`${API_URL}/add-gift`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ presenteId, nome, uuid })
+                        body: JSON.stringify({ presenteId, nome, uuid, deliveryMethod })
                     });
                     const result = await response.json();
                     return result.success;
                 } catch (error) { return false; }
+            }
+
+            // Nova função para atualizar o método de envio caso o usuário mude
+            async function updateGiftMethodInAPI(presenteId, uuid, deliveryMethod) {
+                try {
+                    await fetch(`${API_URL}/update-method`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ presenteId, uuid, deliveryMethod })
+                    });
+                } catch (error) { console.error('Erro ao atualizar método no backend', error); }
             }
 
             async function removeGiftFromAPI(presenteId, uuid) {
@@ -573,24 +585,20 @@
                         </div>`;
                 });
 
-                // Clique para ampliar a foto
                 document.querySelectorAll('.gallery-item').forEach(item => {
                     item.addEventListener('click', function() {
                         const index = parseInt(this.dataset.index);
-                        // Extrai a URL da imagem de background para o src
                         document.getElementById('gallery-modal-img').src = galleryPhotos[index].src;
                         document.getElementById('gallery-modal').style.display = 'flex';
                     });
                 });
                 
-                // NOVO: Clique fora da imagem para fechar a galeria
                 document.getElementById('gallery-modal').addEventListener('click', function(e) {
                     if (e.target !== document.getElementById('gallery-modal-img')) {
                         this.style.display = 'none';
                     }
                 });
 
-                // Configura o Swiper da Galeria (Coverflow 3D)
                 new Swiper(".gallerySwiper", {
                     effect: "coverflow",
                     grabCursor: true,
@@ -636,7 +644,6 @@
                 await updateGiftStatus();
                 addGiftClickListeners();
                 
-                // Configura o Swiper da Lista de Presentes (Slider Padrão)
                 new Swiper('.mySwiper', {
                     loop: true, slidesPerView: 1.2, spaceBetween: 15, centeredSlides: true,
                     pagination: { el: '.mySwiper .swiper-pagination', clickable: true },
@@ -764,12 +771,12 @@
                     confirmButton.disabled = true;
                     
                     try {
-                        const success = await addGiftToAPI(giftId, donorName, userUUID);
+                        // Agora também enviamos o "method" para o backend
+                        const success = await addGiftToAPI(giftId, donorName, userUUID, method);
                         if (success) {
                             localStorage.setItem('gift_method_' + giftId, method);
                             await updateGiftStatus();
                             abrirModalEdicao(selectedGift, `Obrigado, ${donorName}!`);
-                            // NOVO: zIndex 2000 nos confetes para aparecerem em cima
                             confetti({ zIndex: 2000, particleCount: 150, spread: 90, origin: { y: 0.6 }, colors: ['#d1dcce', '#95a78d', '#58714b', '#3a4b31', '#FFFFFF'] });
                         } else {
                             alert('Este presente já foi registrado por outra pessoa!');
@@ -783,8 +790,12 @@
                 const newMethod = e.target.value;
                 const giftId = document.getElementById('selected-gift-id').value;
                 const selectedGift = gifts.find(g => g.id === giftId);
+                
                 localStorage.setItem('gift_method_' + giftId, newMethod);
                 renderMethodDetails(newMethod, selectedGift);
+                
+                // Atualiza também no Backend caso mude de ideia depois
+                updateGiftMethodInAPI(giftId, userUUID, newMethod);
             });
 
             document.getElementById('btn-cancel-gift-modal').addEventListener('click', async function() {
@@ -810,7 +821,6 @@
                     const originalText = this.innerHTML;
                     this.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
                     this.classList.add('copied');
-                    // NOVO: zIndex 2000 nos confetes
                     confetti({ zIndex: 2000, particleCount: 80, spread: 70, origin: { y: 0.6 }, colors: ['#58714b', '#95a78d', '#FFFFFF'] });
                     setTimeout(() => { this.innerHTML = originalText; this.classList.remove('copied'); }, 2000);
                 });
