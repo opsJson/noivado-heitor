@@ -231,6 +231,11 @@
             .event-details-grid { flex-direction: row; justify-content: center; }
             .mySwiper { padding-bottom: 60px; }
         }
+		.img {
+			width: 300px;
+			height: 300px;
+			object-fit: contain;
+		}
     </style>
 </head>
 <body>
@@ -310,7 +315,7 @@
         <section id="map">
             <h2>Localização</h2>
             <p>Veja como chegar ao nosso grande dia!</p>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3694.0493704871033!2d-45.90005982471034!3d-22.2002299797587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjLCsDEyJzAwLjgiUyA0NcKwNTMnNTEuMCJX!5e0!3m2!1spt-BR!2sbr!4v1762310554304!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1509.158333759872!2d-45.93788934150997!3d-22.18000884833803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1772811155379!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </section>
 
         <section id="gifts">
@@ -491,12 +496,27 @@
 
             // --- LISTA DE PRESENTES ---
             const gifts = [
-                { id: 'chaleira', name: 'Chaleira', price: 120.00, link: 'https://www.amazon.com.br/s?k=chaleira', image: 'presentes/chaleira.jpeg' },
-                { id: 'liquidificador', name: 'Liquidificador', price: 180.00, link: 'https://www.amazon.com.br/s?k=liquidificador', image: 'presentes/liquidificador.jpeg' },
-                { id: 'bowls', name: 'Bowls', price: 90.00, link: 'https://www.amazon.com.br/s?k=jogo+de+bowls', image: 'presentes/bowls.jpeg' },
-                { id: 'espelho', name: 'Espelho', price: 200.00, link: 'https://www.amazon.com.br/s?k=espelho', image: 'presentes/espelho.jpeg' },
-                { id: 'airfryer', name: 'Air Fryer', price: 450.00, link: 'https://www.amazon.com.br/s?k=air+fryer', image: 'presentes/airfryer.jpeg' },
-                // ... (mantive a lista resumida aqui para manter o código enxuto, você pode colar os outros itens de volta)
+                { id: 'prato_para_doce', name: 'Prato para Doce', price: 62.90, link: 'https://www.wolycasa.com.br/products/prato-para-doce-com-pe-e-tampa-butterfly-15cm-x-15cm-x-18cm-cristal-wolff?_pos=4&_fid=6f8cca0bf&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/21366_B.jpg?v=1772106223' },
+				 { id: 'jogo_de_cha', name: 'Jogo de Chá', price: 186.90, link: 'https://www.wolycasa.com.br/products/jogo-de-cha-16-pecas-pearl-cristal-wolff?_pos=2&_fid=965d1e1df&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/21623_A.jpg?v=1769569391' },
+				 { id: 'jogo_de_jantar', name: 'Jogo de Jantar', price: 359.90, link: 'https://www.wolycasa.com.br/products/jogo-de-jantar-20-pecas-new-butterfly-cristal-ecologico-lyor-1?_pos=11&_fid=965d1e1df&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/221215_A_7d9284d8-3e4d-4c54-a659-6c1e299a4fed.jpg?v=1769730265' },
+				 { id: 'queijaria_com_tampa', name: 'Queijeira com Tampa', price: 95.90, link: 'https://www.wolycasa.com.br/products/queijeira-com-tampa-new-butterfly-com-fio-de-ouro-19-5cm-x-13-5cm-cristal-ecologico-lyor?_pos=22&_fid=132a2a6cd&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/221254_B_b1ce9170-8012-408c-8a04-450e39b9d600.jpg?v=1772309545'},
+				{ id: 'conjunto_sobremesa', name: 'Conjunto Sobremesa', price: 90.90, link: 'https://www.wolycasa.com.br/products/conjunto-7-pecas-para-sobremesa-de-vidro-diamond-lyor-1?_pos=44&_fid=a493194d5&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/220259_A_1a7f70f6-c66b-4f1d-b294-ca9a36fcc9b3.jpg?v=1769721257'},
+				{ id: 'mantegueira_cristal', name: 'Mantegueira de Cristal', price: 51.90, link: 'https://www.wolycasa.com.br/products/manteigueira-de-cristal-com-tampa-coracao-17cm-x-10-5cm-x-10cm-lyor-1?_pos=40&_fid=1ae9f90f9&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/1703_A_b5a6c526-73db-4499-8123-227b04965ca3.jpg?v=1769715626'},
+				{ id: 'xicaras_de_cha', name: 'Xícaras de Chá', price: 97.90, link: 'https://www.wolycasa.com.br/products/conjunto-4-xicaras-de-cha-de-cristal-com-pires-pearl-180ml-wolff?_pos=2&_fid=56b6265f6&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/27900_A.jpg?v=1769614072'},
+				{ id: 'copos_cristal', name: 'Copos Altos de Cristal', price: 170.90, link: 'https://www.wolycasa.com.br/products/conjunto-6-copos-altos-de-cristal-bangkok-premium-380ml-wolff?_pos=20&_fid=ebf925d75&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/20515_A.jpg?v=1769554890'},
+				{ id: 'copos_vidro', name: 'Copos de Vidro', price: 77.90, link: 'https://www.wolycasa.com.br/products/conjunto-4-copos-lines-butterfly-350ml-vidro-wolff?_pos=32&_fid=ebf925d75&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/21044_A.jpg?v=1769561483'},
+				{ id: 'tacas', name: 'Taças de Vidro', price: 55.99, link: 'https://www.wolycasa.com.br/products/conjunto-6-tacas-para-agua-de-vidro-roman-345ml-wolff?_pos=47&_fid=ecad44a2c&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/35455_A.jpg?v=1769623466'},
+				{ id: 'galheteiros_vidro', name: 'Galheteiros de Vidro', price: 58.99, link: 'https://www.wolycasa.com.br/products/conjunto-2-galheteiros-de-vidro-borossilicato-com-tampa-e-suporte-de-bambu-170ml-wolff?_pos=7&_fid=2b5797d93&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/20739_B.jpg?v=1772107201'},
+				{ id: 'porta_frios', name: 'Porta Frios', price: 114.90, link: 'https://www.wolycasa.com.br/products/porta-frios-com-tampa-de-bambu-basic-20cm-x-15cm-x-8cm-vidro-wolff?_pos=7&_fid=b1e33e2c0&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/21317_A.jpg?v=1770388626'},
+				{ id: 'jarra_medidora', name: 'Jarra Medidora', price: 61.90, link: 'https://www.wolycasa.com.br/products/jarra-medidora-com-tampa-de-bambu-1l-vidro-borossilicato-wolff?_pos=86&_fid=25a571bc8&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/21320_A.jpg?v=1769564666'},
+				{ id: 'potes_bambu', name: 'Potes com Tampa de Bambu', price: 218.90, link: 'https://www.wolycasa.com.br/products/conjunto-12-potes-em-borossilicato-com-tampa-hermetica-e-rack-giratorio-em-bambu-120ml-wolff?_pos=93&_fid=25a571bc8&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/20699_B.jpg?v=1771877943'},
+				{ id: 'porta_mantimentos', name: 'Porta Mantimentos com Tampa de Bambu', price: 225.90, link: 'https://www.wolycasa.com.br/products/conjunto-9-porta-mantimentos-com-tampa-e-suporte-de-bambu-22-5x22x8-5cm-vidro-borossilicato-wolff?_pos=97&_fid=25a571bc8&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/21467_A.jpg?v=1771881075'},
+				{ id: 'mini_mixer', name: 'Mini Mixer a Pilha', price: 43.90, link: 'https://www.wolycasa.com.br/products/mini-mixer-a-pilha-3-5cm-x-3-5cm-x-22-5cm-preto-aco-inox-wolff?_pos=108&_fid=25a571bc8&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/21508_A.jpg?v=1769568455'},
+				{ id: 'potes_colher_bambu', name: 'Potes com Tampa e Colher de Bambu', price: 141.90, link: 'https://www.wolycasa.com.br/products/conjunto-3-potes-em-borossilicato-com-tampa-hermetica-colher-e-bandeja-em-bambu-350ml-wolff?_pos=187&_fid=25a571bc8&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/20696_A.jpg?v=1769557116'},
+				{ id: 'pilao_marmore', name: 'Pilão de Mármore', price: 84.90, link: 'https://www.wolycasa.com.br/products/pilao-de-marmore-com-socador-cinza-marin-12cm-x-6cm-lyor?_pos=230&_fid=8d8cf4723&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/7560_A_0fda56e6-abdf-467f-b730-975f931f53d0.jpg?v=1769708900'},
+				{ id: 'jarra', name: 'Jarra Porta de Geladeira', price: 31.90, link: 'https://www.wolycasa.com.br/products/jarra-porta-de-geladeira-de-vidro-com-tampa-1l-lyor-1?_pos=2&_fid=09319634a&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/7822_A_7779e0ce-0f95-4a3d-9b07-6439990974c5.jpg?v=1772741360'},
+				{ id: 'panelas', name: 'Panelas de Indução Granito', price: 699.90, link: 'https://www.wolycasa.com.br/products/conjunto-5-panelas-de-inducao-granito-chef-bege-aluminio-com-revestimento-ceramico-lyor?_pos=41&_fid=34e022836&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/221027_A_09f1019d-3d88-4d9a-8507-68b5be4a1380.jpg?v=1769728295'},
+				{ id: 'bistequeira', name: 'Bistequeira de Indução Granito', price: 158.90, link: 'https://www.wolycasa.com.br/products/bistequeira-de-inducao-granito-chef-24cm-taupe-aluminio-com-revestimento-ceramico-lyor?_pos=60&_fid=e7bcff440&_ss=c', image: 'https://www.wolycasa.com.br/cdn/shop/files/220980_A_20c25ac8-6c8c-42e3-b576-56d37d9b3983.jpg?v=1769727721'},
             ];
 
             // --- GALERIA DE FOTOS ---
