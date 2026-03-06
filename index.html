@@ -190,7 +190,13 @@
         /* Lista de Presentes */
         .mySwiper { width: 100%; padding: 20px 0 50px 0; }
         .mySwiper .swiper-slide { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 1px solid var(--color-lightest); display: flex; flex-direction: column; justify-content: space-between; height: auto;}
-        .mySwiper .swiper-slide img { width: 100%; height: 200px; object-fit: cover; }
+        .mySwiper .swiper-slide img { 
+    width: 100%; 
+    height: 200px; 
+    object-fit: contain; 
+    padding: 10px; 
+    box-sizing: border-box; 
+}
         .gift-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         .gift-info h4 { font-size: 1.1rem; color: var(--color-darkest); margin-bottom: 5px; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
         .gift-info .price { font-weight: bold; color: var(--color-dark); margin-bottom: 15px; font-size: 1.2rem;}
@@ -401,8 +407,8 @@
             </div>
             
             <div class="modal-buttons" style="justify-content: center; gap: 10px; margin-top: 25px;">
+				<button type="button" class="modal-button confirm" id="close-step-2">Fechar</button>
                 <button type="button" class="modal-button cancel" id="btn-cancel-gift-modal" style="background-color: #ff4444; color: white;" title="Devolver o presente para a lista">Cancelar Presente</button>
-                <button type="button" class="modal-button confirm" id="close-step-2">Fechar</button>
             </div>
         </div>
     </div>
@@ -669,7 +675,7 @@
                             if (p) p.innerHTML = `Presenteado por: ${giftData.donorName}`;
                             
                             if (giftData.donorUUID === userUUID) {
-                                link.textContent = 'Ver/Editar Presente';
+                                link.textContent = 'Editar Presente';
                                 link.style.backgroundColor = 'var(--color-medium)';
                                 link.dataset.isMine = 'true';
                             } else {
